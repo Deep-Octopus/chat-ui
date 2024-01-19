@@ -1,0 +1,232 @@
+[
+  {
+    "fields": [
+      {
+        "type": "input",
+        "label": "学号",
+        "prop": "id",
+        "placeholder": "请输入学号",
+        "disabled": false
+      },
+      {
+        "type": "input",
+        "label": "姓名",
+        "prop": "name",
+        "placeholder": "请输入姓名",
+        "disabled": false
+      },
+      {
+        "type": "radio",
+        "label": "性别",
+        "prop": "gender",
+        "options": [
+          "男",
+          "女"
+        ],
+        "disabled": false
+      },
+      {
+        "type": "input",
+        "label": "电话号码",
+        "prop": "phoneNumber",
+        "placeholder": "请输入电话号码",
+        "disabled": false
+      }
+    ],
+    "rules": {
+      "id": [
+        {
+          "required": true,
+          "message": "请输入学号",
+          "trigger": "blur"
+        },
+        {
+          "pattern": {},
+          "message": "必须是11位数字",
+          "trigger": "blur"
+        }
+      ],
+      "name": [
+        {
+          "required": true,
+          "message": "请输入姓名",
+          "trigger": "blur"
+        },
+        {
+          "pattern": {},
+          "message": "只能输入中文和英文",
+          "trigger": "blur"
+        }
+      ],
+      "phoneNumber": [
+        {
+          "required": true,
+          "message": "请输入电话号码",
+          "trigger": "blur"
+        },
+        {
+          "pattern": {},
+          "message": "必须是11位数字",
+          "trigger": "blur"
+        }
+      ]
+    },
+    "form": {
+      "id": "",
+      "name": "",
+      "gender": "",
+      "phoneNumber": ""
+    }
+  },
+  {
+    "fields": [
+      {
+        "type": "input",
+        "label": "教工号",
+        "prop": "id",
+        "placeholder": "请输入教工号",
+        "disabled": false
+      },
+      {
+        "type": "input",
+        "label": "姓名",
+        "prop": "name",
+        "placeholder": "请输入姓名",
+        "disabled": false
+      },
+      {
+        "type": "radio",
+        "label": "性别",
+        "prop": "gender",
+        "options": [
+          "男",
+          "女"
+        ],
+        "disabled": false
+      },
+      {
+        "type": "select",
+        "label": "学历",
+        "prop": "educationalBackground",
+        "options": [
+          "学士",
+          "硕士",
+          "博士",
+          "博士后"
+        ],
+        "disabled": false
+      },
+      {
+        "type": "input",
+        "label": "电话号码",
+        "prop": "phoneNumber",
+        "placeholder": "请输入电话号码",
+        "disabled": false
+      }
+    ],
+    "rules": {
+      "id": [
+        {
+          "required": true,
+          "message": "请输入教工号",
+          "trigger": "blur"
+        },
+        {
+          "pattern": {},
+          "message": "3-8 位数字",
+          "trigger": "blur"
+        }
+      ],
+      "name": [
+        {
+          "required": true,
+          "message": "请输入姓名",
+          "trigger": "blur"
+        },
+        {
+          "pattern": {},
+          "message": "只能输入中文和英文",
+          "trigger": "blur"
+        }
+      ],
+      "phoneNumber": [
+        {
+          "required": true,
+          "message": "请输入电话号码",
+          "trigger": "blur"
+        },
+        {
+          "pattern": {},
+          "message": "必须是11位数字",
+          "trigger": "blur"
+        }
+      ]
+    },
+    "form": {
+      "id": "",
+      "name": "",
+      "gender": "",
+      "educationalBackground": "",
+      "phoneNumber": ""
+    }
+  },
+  {
+    "fields": [
+      {
+        "type": "input",
+        "label": "班级号",
+        "prop": "id",
+        "placeholder": "请输入班级号",
+        "disabled": false
+      },
+      {
+        "type": "input",
+        "label": "班主任教工号",
+        "prop": "teacherId",
+        "placeholder": "请输入班主任教工号",
+        "disabled": false
+      },
+      {
+        "type": "select",
+        "label": "所属学院",
+        "prop": "department",
+        "options": [
+          "人工智能学院"
+        ],
+        "disabled": false
+      }
+    ],
+    "rules": {
+      "id": [
+        {
+          "required": true,
+          "message": "请输入班级号",
+          "trigger": "blur"
+        },
+        {
+          "pattern": {},
+          "message": "8-10 位数字",
+          "trigger": "blur"
+        }
+      ],
+      "teacherId": [
+        {
+          "required": true,
+          "message": "请输入班主任教工号",
+          "trigger": "blur"
+        },
+        {
+          "pattern": {},
+          "message": "3-8位数字",
+          "trigger": "blur"
+        }
+      ]
+    },
+    "form": {
+      "id": "",
+      "teacherId": "",
+      "department": ""
+    }
+  }
+]
+
