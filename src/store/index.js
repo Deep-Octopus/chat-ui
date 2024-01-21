@@ -1,13 +1,13 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
 import user from "@/store/modules/user";
-import page from "@/store/modules/page";
+import message from "@/store/modules/message";
 Vue.use(Vuex)
 
 export default new Vuex.Store({
   modules: {
     user,
-    page
+    message,
   },
   // getters
 })

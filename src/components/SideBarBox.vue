@@ -5,6 +5,11 @@ export default {
       avatarUrl: "https://cube.elemecdn.com/0/88/03b0d39583f48206768a7534e55bcpng.png",
       state:"",//听歌状态。。。
     }
+  },
+  computed:{
+    userinfo(){
+      return this.$store.state.user.user
+    }
   }
 }
 </script>
@@ -12,7 +17,17 @@ export default {
 <template>
   <el-container class="side-main">
     <el-header class="side-col" style="padding: 7px 13px">
-      <el-avatar :size="'large'" :shape="'circle'" :src="avatarUrl"></el-avatar>
+      <el-popover
+          placement="bottom"
+          :title="userinfo.name"
+          width="200"
+          trigger="click">
+        <div>
+          {{userinfo}}
+        </div>
+        <el-avatar slot="reference" :size="'large'" :shape="'circle'" :src="avatarUrl"></el-avatar>
+      </el-popover>
+
     </el-header>
     <el-main class="side-col" style="padding: 8px">
       <div class="iconfont mode">&#xe719;</div>

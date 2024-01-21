@@ -1,16 +1,52 @@
 <script>
+import { Picker } from "emoji-mart-vue";
 export default {
   name: "EditMessageBox",
+  components: { //注册组件，不能全局挂载
+    Picker
+  },
   data() {
     return {
-      message:"",
+
     }
   },
-  methods:{
-    sendMsg(){
-
+  computed:{
+    message(){
+      return this.$store.state.user.message
     },
-  }
+    userinfo() {
+      return this.$store.state.user.user;
+    },
+    target(){
+      return this.$store.state.user.currentContactTarget
+    }
+  },
+
+  methods: {
+    sendMsg(message) {
+      let msg = {
+        fromId: this.userinfo.ID, // 发送者
+        targetId:this.target.ID, // 接收者
+        type: this.target.isGroup?2:1, // 发送类型  群聊、(广播)、私聊
+        media:1,// 消息类型  文字1、图片2、音频3
+        content:message, // 消息内容
+        pic:"",
+        url:"",
+        desc:"",
+        amount:0// 其他数字统计
+      }
+      this.$store.dispatch("user/sendMessage",msg)
+      this.$store.dispatch("message/addNewMessage",{
+        message:{...msg},
+        target:{...this.$store.state.user.currentContactTarget}
+      })
+      message = ''
+    },
+    addEmoji(e){
+      this.$store.state.user.message += e.native;
+    },
+  },
+
 }
 </script>
 
@@ -19,7 +55,13 @@ export default {
     <div class="emb-top">
       <div class="emb-op-box">
         <el-tooltip content="表情">
-          <div class="iconfont emb-op">&#xe601;</div>
+          <el-popover
+              placement="bottom"
+              width="200"
+              trigger="click">
+            <picker :include="['people','Smileys']" :showSearch="false" :showPreview="false" :showCategories="false" @select="addEmoji" />
+            <div slot="reference" class="iconfont emb-op">&#xe601;</div>
+          </el-popover>
         </el-tooltip>
         <el-tooltip content="截图">
           <div class="iconfont emb-op">&#xe611;</div>
@@ -45,10 +87,13 @@ export default {
       </el-tooltip>
     </div>
     <div class="emb-content">
-      <el-input type="textarea" :autosize="{minRows:2}" v-model="message" placeholder="输入消息..." style="flex: 1;white-space: pre-wrap;max-height: 100%; overflow-y: auto;"></el-input>
+<!--      TODO:回车发送消息-->
+      <el-input type="textarea" :autosize="{minRows:2}" v-model="$store.state.user.message"
+                placeholder="输入消息..."
+                style="flex: 1;white-space: pre-wrap;max-height: 100%; overflow-y: auto;"></el-input>
     </div>
     <div class="emb-footer">
-      <el-dropdown split-button type="primary" @click="sendMsg" trigger="click">
+      <el-dropdown split-button type="primary" @click="sendMsg(message)" trigger="click" :disabled="message===''">
         发送
         <el-dropdown-menu slot="dropdown">
           <el-dropdown-item>按 Enter 键发送消息</el-dropdown-item>
@@ -70,11 +115,13 @@ export default {
   justify-content: left;
   gap: 20px;
 }
-.emb-top{
+
+.emb-top {
   cursor: pointer;
   display: flex;
   justify-content: space-between;
 }
+
 .emb-op {
   transition: .3s;
   font-size: 24px;
@@ -83,18 +130,32 @@ export default {
     color: rgb(0, 144, 255);
   }
 }
-.emb-content{
-  height: 70%;
-  max-height: 75%;
+
+.emb-content {
+  height: 60%;
+  max-height: 60%;
   display: flex;
   margin: 10px;
-  &/deep/.el-textarea__inner{
+
+  & /deep/ .el-textarea__inner {
     border: none;
   }
 }
-.emb-footer{
+
+.emb-footer {
   display: flex;
   justify-content: right;
 }
-
+.emoji-mart[data-v-7bc71df8] {
+  font-family: -apple-system, BlinkMacSystemFont, "Helvetica Neue", sans-serif;
+  display: -ms-flexbox;
+  display: flex;
+  -ms-flex-direction: column;
+  flex-direction: column;
+  height: 420px;
+  color: #ffffff !important;
+  border: 1px solid #d9d9d9;
+  border-radius: 5px;
+  background: #fff;
+}
 </style>

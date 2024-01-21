@@ -8,9 +8,12 @@
             <h2 class="title">Create Account</h2>
             <div style="height: 15px"></div>
             <!--          <span class="text">or use email for registration</span>-->
-            <el-form-item label="Name" prop="name">
-              <el-input v-model="registerForm.name" placeholder="Name"></el-input>
+            <el-form-item label="NickName" prop="name">
+              <el-input v-model="registerForm.name" placeholder="NickName"></el-input>
             </el-form-item>
+<!--            <el-form-item label="Username" prop="username">-->
+<!--              <el-input v-model="registerForm.username" placeholder="Username"></el-input>-->
+<!--            </el-form-item>-->
             <el-form-item label="Email" prop="email">
               <el-input v-model="registerForm.email" placeholder="Email"></el-input>
             </el-form-item>
@@ -70,45 +73,50 @@
             <!--          </p>-->
 
             <!--          暂时还没想到注册功能有什么用，先封印起来，想到了再启用-->
-                      <el-button type="primary" @click="isLogin = !isLogin">{{ switchButtonText }}</el-button>
+                      <el-button type="primary" @click="$store.state.user.isLogin = !$store.state.user.isLogin">{{ switchButtonText }}</el-button>
           </div>
         </div>
       </div>
     </div>
   </div>
-
 </template>
 <script>
 import message from "@/utils/message";
 import Background from "@/components/Background.vue";
 
 export default {
+  name:"LoginPage",
   components:{Background},
   data() {
     return {
-      isLogin: true,
       loginForm: {
-        username: '',
-        password: '',
+        username: '111111',
+        password: '123123',
       },
       registerForm: {
         name: '',
+        // username:'',
         email: '',
         password: '',
-        confirmPassword: ''
+        confirmPassword: '',
       },
       registerFormRules: {
-        id: [
-          { required: true, message: '请输入您的学号或教工号', trigger: 'blur' },
-          { pattern: /^[0-9]{6-20}$/, message: '密码长度为6 ~ 20个数字', trigger: 'blur' }
+        name: [
+          { required: true, message: '请输入您的昵称', trigger: 'blur' },
+          // { pattern: /^*{3-10}$/, message: '长度为3 ~ 10个字符', trigger: 'blur' }
         ],
+        // username: [
+        //   { required: true, message: '请输入您的用户名', trigger: 'blur' },
+        //   { pattern: /^[0-9]{3-11}$/, message: '长度为3 ~ 10个字符', trigger: 'blur' }
+        // ],
         email: [
           { required: true, message: '请输入电子邮箱地址', trigger: 'blur' },
           { type: 'email', message: '请输入有效的电子邮件地址', trigger: ['blur','change'] }
         ],
         password: [
           { required: true, message: '请输入您的密码', trigger: 'blur' },
-          { pattern:/^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{6,20}$/, message: '至少1个字母和1个数字，且长度不能少于8个字符,可以包含特殊字符', trigger: 'blur' }
+          { pattern:/^[0-9]{6,10}$/, message: '至少1个字母和1个数字，且长度不能少于8个字符,可以包含特殊字符', trigger: 'blur' }
+          // { pattern:/^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{6,20}$/, message: '至少1个字母和1个数字，且长度不能少于8个字符,可以包含特殊字符', trigger: 'blur' }
         ],
         confirmPassword: [
           { required: true, message: '请再次输入您的密码', trigger: 'blur' },
@@ -141,6 +149,9 @@ export default {
     }
   },
   computed: {
+    isLogin(){
+      return this.$store.state.user.isLogin
+    },
     registerButtonText() {
       return this.registerButtonDisabled ? `Resend (${this.countdownSeconds}s)` : 'Register'
     },
@@ -161,16 +172,20 @@ export default {
   methods: {
     handleRegister() {
       this.$refs.registerForm.validate(valid => {
-        if (!valid) {
-          return
+        if (valid) {
+
+          // this.registerButtonDisabled = true
+          // this.registerButtonTitle = `Resend (${this.countdownSeconds}s)`
+          // this.countdownTimer = setInterval(() => {
+          //   this.countdownSeconds--
+          // }, 1000)
+          this.$store.dispatch("user/register",{form:this.registerForm,router:this.$router})
+
+        }else {
+          message.warning("输入不符合格式")
         }
 
-        // Send verification email
-        this.registerButtonDisabled = true
-        this.registerButtonTitle = `Resend (${this.countdownSeconds}s)`
-        this.countdownTimer = setInterval(() => {
-          this.countdownSeconds--
-        }, 1000)
+
       })
     },
     handleLogin() {
@@ -185,6 +200,9 @@ export default {
     },
 
 
+  },
+  mounted() {
+    window.localStorage.clear()
   },
   beforeDestroy() {
     if (this.countdownTimer) {
