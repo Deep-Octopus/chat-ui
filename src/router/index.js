@@ -20,7 +20,7 @@ const router = new VueRouter({
             meta: {
                 requiresAuth: false
             },
-            component: () => import('@/views/Login.vue')
+            component: () => import('@/views/LoginPage.vue')
         }, {
             path: '/main',
             name: 'main',
